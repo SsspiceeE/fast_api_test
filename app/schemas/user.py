@@ -3,14 +3,18 @@ from pydantic import BaseModel, EmailStr
 from typing import Optional
 
 
-class BaseUser(BaseModel):
+class UserBaseSchema(BaseModel):
     username: str
-    password: str
     email: EmailStr
     age: int
     full_name: Optional[str] = None
 
 
-class ModelUser(BaseUser):
+class UserCreateSchema(UserBaseSchema):
+    password: str
+
+
+class UserResponseSchema(UserBaseSchema):
     id: int
+
 
