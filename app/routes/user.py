@@ -5,15 +5,15 @@ from fastapi import HTTPException
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy import select
 
-from app.schemas.user import UserBaseSchema, UserResponseSchema, UserCreateSchema
+from app.schemas.user import UserResponseSchema, UserCreateSchema
 from app.core.dep import get_db
 from app.models.user import User
 from app.utils.password_hash import hash_password
 
-router = APIRouter(prefix='/api')
+router = APIRouter(prefix='/users')
 
 
-@router.get('/user/', response_model=List[UserResponseSchema])
+@router.get('/user', response_model=List[UserResponseSchema])
 async def get_users(
         db: AsyncSession = Depends(get_db),
 ):
@@ -37,7 +37,7 @@ async def get_user(
     return user
 
 
-@router.post('/user/', status_code=201, response_model=UserResponseSchema)
+@router.post('/user', status_code=201, response_model=UserResponseSchema)
 async def add_user(
         user_json: UserCreateSchema,
         db: AsyncSession = Depends(get_db),
